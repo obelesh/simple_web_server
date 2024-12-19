@@ -22,6 +22,8 @@ Testing the webserver.
 
 # PROGRAM:
 ```
+from http.server import HTTPServer, BaseHTTPRequestHandler
+content = """
 <html>
     <body>
         <h1 align="center">DEVICE PROPERTIES(OBELESH  24901123)</h1>
@@ -43,6 +45,18 @@ Testing the webserver.
     </body>
 
 </html>
+"""
+class myhandler(BaseHTTPRequestHandler):
+def do_GET(self):
+print("request received")
+self.send_response(200)
+self.send_header('content-type', 'text/html; charset=utf-8')
+self.end_headers()
+self.wfile.write(content.encode())
+server_address = ('',8000)
+httpd = HTTPServer(server_address,myhandler)
+print("my webserver is running...")
+httpd.serve_forever()
 ```
 # OUTPUT:
 ![simple webserver](https://github.com/user-attachments/assets/138d0df8-9c46-4beb-8cff-8517e861f949)
